@@ -76,27 +76,27 @@
       const imageUrl = task.imageUrl || '';
 
       card.innerHTML = `
-        <div class="card poster-card h-100">
-          <div class="card-body d-flex flex-column">
-            <div class="poster-banner">WANTED</div>
-            <h5 class="card-title">${task.title}</h5>
-            
-            <div class="poster-image-box">
-              ${imageUrl ? `<img src="${imageUrl}" alt="${task.title}">` : '<div class="no-image-text">NO IMAGE</div>'}
-            </div>
-            
-            <p class="card-text">${task.description}</p>
-            
-            <div class="bounty-section">
-              <div class="bounty-label">Bounty (USD)</div>
-              <div class="bounty-amount">$${task.bounty}</div>
-            </div>
+        <a href="task.html?id=${taskId}" class="card-link">
+          <div class="card poster-card h-100">
+            <div class="card-body d-flex flex-column">
+              <div class="poster-banner">WANTED</div>
+              <h5 class="card-title">${task.title}</h5>
+              
+              <div class="poster-image-box">
+                ${imageUrl ? `<img src="${imageUrl}" alt="${task.title}">` : '<div class="no-image-text">NO IMAGE</div>'}
+              </div>
+              
+              <p class="card-text">${task.description}</p>
+              
+              <div class="bounty-section">
+                <div class="bounty-label">Bounty (USD)</div>
+                <div class="bounty-amount">$${task.bounty}</div>
+              </div>
 
-            <div class="status-band">${task.status || 'OPEN'}</div>
-            
-            <a href="#" class="btn btn-primary claim-task-btn mt-auto" data-task-id="${taskId}">Claim Task</a>
+              <div class="status-band">${task.status || 'OPEN'}</div>
+            </div>
           </div>
-        </div>
+        </a>
       `;
       return card;
     }
@@ -126,31 +126,6 @@
       if (e.target.classList.contains('filter-btn')) {
         const filter = e.target.dataset.filter;
         fetchAndDisplayTasks(filter);
-      }
-    });
-
-    // Add event listener for claiming tasks
-    posterGrid.addEventListener('click', (e) => {
-      if (e.target.classList.contains('claim-task-btn')) {
-        e.preventDefault();
-        const taskId = e.target.dataset.taskId;
-        
-        if (confirm("Are you sure you want to claim this task?")) {
-          db.collection("tasks").doc(taskId).update({
-            status: "IN REVIEW"
-          })
-          .then(() => {
-            console.log("Task status updated to IN REVIEW");
-            // Find the card and update its status
-            const card = e.target.closest('.poster-card');
-            const statusBand = card.querySelector('.status-band');
-            statusBand.textContent = "IN REVIEW";
-            e.target.style.display = 'none'; // Hide the button after claiming
-          })
-          .catch((error) => {
-            console.error("Error updating task status: ", error);
-          });
-        }
       }
     });
 
