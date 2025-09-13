@@ -127,20 +127,38 @@
         querySnapshot.forEach((doc) => {
           const task = doc.data();
           const row = document.createElement('tr');
+          row.setAttribute('data-id', doc.id);
           row.innerHTML = `
             <td>${task.title}</td>
             <td>${task.category}</td>
             <td>${task.bounty}</td>
             <td>${task.status}</td>
             <td>
-              <button class="btn btn-sm btn-warning">Edit</button>
-              <button class="btn btn-sm btn-danger">Delete</button>
+              <button class="btn btn-sm btn-warning edit-btn">Edit</button>
+              <button class="btn btn-sm btn-danger delete-btn">Delete</button>
             </td>
           `;
           taskList.appendChild(row);
         });
       });
     }
+
+    // Handle delete
+    taskList.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete-btn')) {
+        const id = e.target.parentElement.parentElement.getAttribute('data-id');
+        if (confirm("Are you sure you want to delete this task?")) {
+          db.collection("tasks").doc(id).delete()
+            .then(() => {
+              console.log("Document successfully deleted!");
+              fetchTasks();
+            })
+            .catch((error) => {
+              console.error("Error removing document: ", error);
+            });
+        }
+      }
+    });
 
     // Initial fetch
     fetchTasks();
