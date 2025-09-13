@@ -82,50 +82,80 @@
           `;
 
           const submissionForm = document.getElementById('submissionForm');
-          const submitBtn = document.getElementById('submitBtn');
-
-          submissionForm.addEventListener("submit", async (e) => {
+          
+          submissionForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
 
             const name = document.getElementById("submitterName").value;
             const contact = document.getElementById("submitterContact").value;
             const file = document.getElementById("submissionFile").files[0];
+            const submitBtn = document.getElementById('submitBtn');
 
             if (!file) {
               alert("Please upload a file before submitting.");
-              submitBtn.disabled = false;
-              submitBtn.textContent = 'Submit Work';
               return;
             }
 
-            try {
-              const storageRef = storage.ref(`submissions/${taskId}/${Date.now()}_${file.name}`);
-              await storageRef.put(file);
-              const fileUrl = await storageRef.getDownloadURL();
+            // Disable button
+            submitBtn.disabled = true;
 
-              await db.collection("tasks").doc(taskId).collection("submissions").add({
-                name,
-                contact,
-                fileUrl,
-                fileName: file.name,
-                submittedAt: firebase.firestore.FieldValue.serverTimestamp()
-              });
+            const storageRef = storage.ref(`submissions/${taskId}/${Date.now()}_${file.name}`);
+            const uploadTask = storageRef.put(file);
 
-              await db.collection('tasks').doc(taskId).update({ status: 'IN REVIEW' });
+            // Listen for state changes, errors, and completion of the upload.
+            uploadTask.on('state_changed',
+              (snapshot) => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                submitBtn.textContent = `Uploading: ${progress.toFixed(0)}%`;
+              },
+              (error) => {
+                console.error("Upload failed:", error);
+                let errorMessage = "File upload failed. Please try again.";
+                switch (error.code) {
+                  case 'storage/unauthorized':
+                    errorMessage = "Permission Denied. Please check the site's Firebase Storage rules.";
+                    break;
+                  case 'storage/canceled':
+                    errorMessage = "Upload Canceled.";
+                    break;
+                  case 'storage/unknown':
+                    errorMessage = "An unknown error occurred. Please check the console for more details.";
+                    break;
+                }
+                alert(errorMessage);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Work';
+              },
+              () => {
+                // Upload completed successfully, now we can get the download URL
+                uploadTask.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+                  try {
+                    await db.collection("tasks").doc(taskId).collection("submissions").add({
+                      name,
+                      contact,
+                      fileUrl: downloadURL,
+                      fileName: file.name,
+                      submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
 
-              alert("Submission uploaded successfully!");
-              submissionForm.reset();
-              document.querySelector('.status-band').textContent = 'IN REVIEW';
-              submitBtn.textContent = 'Submitted!';
+                    await db.collection('tasks').doc(taskId).update({ status: 'IN REVIEW' });
 
-            } catch (error) {
-              console.error("Submission Error: ", error);
-              alert(`An error occurred during submission: ${error.message}`);
-              submitBtn.disabled = false;
-              submitBtn.textContent = 'Submit Work';
-            }
+                    alert("Submission uploaded successfully!");
+                    submissionForm.reset();
+                    document.querySelector('.status-band').textContent = 'IN REVIEW';
+                    submitBtn.textContent = 'Submitted!';
+                    submitBtn.disabled = true; // Keep disabled after successful submission
+
+                  } catch (dbError) {
+                      console.error("Error writing to database: ", dbError);
+                      alert("File uploaded, but failed to save submission data. Please contact an admin.");
+                      submitBtn.disabled = false;
+                      submitBtn.textContent = 'Submit Work';
+                  }
+                });
+              }
+            );
           });
         } else {
           taskDetail.innerHTML = "<p class='text-center text-danger'>❌ Task not found</p>";
