@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Wooden board-style container -->
   <div class="board-container">
     <h1 class="board-title text-center">📜 Task Details</h1>
     <div id="taskDetail" class="poster-card mx-auto" style="max-width: 700px;">
@@ -22,9 +21,9 @@
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
 
   <script>
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDAVEsmPu_-cGxXgF4DSKukAD144P3-gXM",
       authDomain: "htwearntasklist.firebaseapp.com",
@@ -37,10 +36,9 @@
 
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const storage = firebase.storage();
 
     const taskDetail = document.getElementById("taskDetail");
-
-    // Get taskId from URL
     const urlParams = new URLSearchParams(window.location.search);
     const taskId = urlParams.get("id");
 
@@ -57,7 +55,7 @@
               ${imageUrl ? `<img src="${imageUrl}" alt="${task.title}">` : '<div class="no-image-text">NO IMAGE</div>'}
             </div>
 
-            <p class="card-text"><strong>Description:</strong><br>${task.description}</p>
+            <p class="card-text"><strong>Description:</strong><br>${task.fullDescription || task.description}</p>
 
             <div class="bounty-section">
               <div class="bounty-label">Bounty</div>
@@ -66,30 +64,56 @@
 
             <div class="status-band">${task.status || 'OPEN'}</div>
 
-            <button id="claimTaskBtn" class="btn btn-primary mt-3">Claim This Task</button>
+            <form id="submissionForm" class="mt-4 text-start">
+              <div class="mb-3">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-control" id="submitterName" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Contact Info (Email/Phone)</label>
+                <input type="text" class="form-control" id="submitterContact" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Upload File</label>
+                <input type="file" class="form-control" id="submissionFile" required>
+              </div>
+              <button type="submit" class="btn btn-success w-100">Submit Work</button>
+            </form>
           `;
 
-          // Add claim button logic
-          document.getElementById("claimTaskBtn").addEventListener("click", () => {
-            if (confirm("Do you want to claim this task?")) {
-              db.collection("tasks").doc(taskId).update({ status: "IN REVIEW" })
-                .then(() => {
-                  alert("Task claimed! Status set to IN REVIEW.");
-                  document.querySelector(".status-band").textContent = "IN REVIEW";
-                  document.getElementById("claimTaskBtn").style.display = "none";
-                })
-                .catch((error) => {
-                  console.error("Error claiming task: ", error);
-                  alert("Error claiming task. See console.");
-                });
+          // Handle submission
+          document.getElementById("submissionForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = document.getElementById("submitterName").value;
+            const contact = document.getElementById("submitterContact").value;
+            const file = document.getElementById("submissionFile").files[0];
+
+            if (!file) {
+              alert("Please upload a file before submitting.");
+              return;
             }
+
+            const storageRef = storage.ref(`submissions/${taskId}/${Date.now()}_${file.name}`);
+            await storageRef.put(file);
+            const fileUrl = await storageRef.getDownloadURL();
+
+            db.collection("tasks").doc(taskId).collection("submissions").add({
+              name,
+              contact,
+              fileUrl,
+              fileName: file.name,
+              submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+              alert("Submission uploaded successfully!");
+              document.getElementById("submissionForm").reset();
+            }).catch((err) => {
+              console.error(err);
+              alert("Error saving submission.");
+            });
           });
         } else {
           taskDetail.innerHTML = "<p class='text-center text-danger'>❌ Task not found</p>";
         }
-      }).catch((error) => {
-        console.error("Error fetching task:", error);
-        taskDetail.innerHTML = "<p class='text-center text-danger'>⚠ Error loading task details</p>";
       });
     } else {
       taskDetail.innerHTML = "<p class='text-center text-warning'>⚠ No task selected</p>";
