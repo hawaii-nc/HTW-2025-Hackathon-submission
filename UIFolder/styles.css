@@ -1,17 +1,20 @@
+/* Beach background */
 body {
-  background: #f5deb3; /* light parchment */
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
+  background-size: cover;
   font-family: 'Times New Roman', serif;
   color: black;
 }
 
+/* Wooden board */
 .board-container {
-  background: #deb887; /* wood brown */
-  border: 8px solid #8b5a2b;
-  border-radius: 15px;
+  background: #deb887; /* wood */
+  border: 12px solid #8b5a2b;
+  border-radius: 20px;
   padding: 20px;
-  margin: 20px auto;
-  width: 80%;
-  box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+  margin: 40px auto;
+  width: 85%;
+  box-shadow: 8px 8px 20px rgba(0,0,0,0.6);
 }
 
 .board-title {
@@ -26,24 +29,26 @@ body {
   margin-bottom: 20px;
 }
 
-.board-filters {
-  margin-bottom: 10px;
-}
-
 .poster-scroll {
-  max-height: 500px;
+  max-height: 600px;
   overflow-y: auto;
   border: 3px solid black;
-  padding: 10px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.2);
 }
 
+/* Posters */
 .poster {
   background: #fff8dc;
   border: 2px solid black;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 15px;
-  margin-bottom: 20px;
   cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+.poster:hover {
+  transform: scale(1.02);
 }
 
 .poster img {
@@ -55,16 +60,19 @@ body {
   margin: 0 auto 10px;
 }
 
+/* Status colors */
 .status-open { color: green; font-weight: bold; }
 .status-review { color: orange; font-weight: bold; }
 .status-closed { color: red; font-weight: bold; }
 
+/* Admin button */
 .admin-btn {
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
+/* Admin overlay */
 .admin-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
