@@ -1,88 +1,162 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Special+Elite&family=Ultra&display=swap');
+
 /* Beach background */
 body {
   background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Times New Roman', serif;
-  color: black;
 }
 
-/* Wooden board */
+/* Wooden board container */
 .board-container {
-  background: #deb887; /* wood */
-  border: 12px solid #8b5a2b;
-  border-radius: 20px;
-  padding: 20px;
+  background: #deb887; /* A wood-like color */
+  border: 15px solid #6b4f2c; /* Darker wood border */
+  border-radius: 10px;
+  padding: 25px;
   margin: 40px auto;
-  width: 85%;
-  box-shadow: 8px 8px 20px rgba(0,0,0,0.6);
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .board-title {
   text-align: center;
-  font-size: 2.5rem;
+  font-family: 'Playfair Display', serif; /* A more stylistic serif font */
+  font-size: 3rem;
   font-weight: bold;
-  text-decoration: underline;
+  color: #3d2b1f; /* Dark brown text */
 }
 
 .board-subtitle {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  color: #3d2b1f;
 }
 
 .poster-scroll {
-  max-height: 600px;
+  max-height: 70vh;
   overflow-y: auto;
-  border: 3px solid black;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
 }
 
-/* Posters */
-.poster {
-  background: #fff8dc;
-  border: 2px solid black;
-  border-radius: 12px;
+/* Wanted Poster Style */
+.poster-card {
+  background: #fdf5e6; /* Parchment color */
+  border: 5px solid #3d2b1f; /* Hand-drawn style border */
+  border-radius: 5px;
   padding: 15px;
-  cursor: pointer;
   text-align: center;
-  transition: transform 0.2s ease;
-}
-.poster:hover {
-  transform: scale(1.02);
+  font-family: 'Special Elite', cursive; /* A typewriter/old-style font */
+  color: black;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Make cards in a row the same height */
 }
 
-.poster img {
-  display: block;
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
+.poster-banner {
+  font-family: 'Ultra', serif; /* Old-west/slab serif font */
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 3px double black;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.poster-card .card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.poster-card .card-text {
+  font-size: 1rem;
+  flex-grow: 1; /* Allows description to take available space */
+}
+
+.poster-image-box {
+  width: 90%;
+  height: 200px; /* Fixed height for consistency */
   border: 3px solid black;
-  margin: 0 auto 10px;
-}
-
-/* Status colors */
-.status-open { color: green; font-weight: bold; }
-.status-review { color: orange; font-weight: bold; }
-.status-closed { color: red; font-weight: bold; }
-
-/* Admin button */
-.admin-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-/* Admin overlay */
-.admin-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6);
+  margin: 15px auto;
+  position: relative;
+  background-color: #eee;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.poster-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image-text {
+  font-family: 'Arial', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(255, 0, 0, 0.5);
+  transform: rotate(-20deg);
+  text-align: center;
+}
+
+.bounty-section {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  padding: 10px 0;
+  margin-top: 15px;
+}
+
+.bounty-label {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.bounty-amount {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.status-band {
+  font-family: 'Impact', sans-serif;
+  text-transform: uppercase;
+  color: red;
+  font-size: 1.2rem;
+  border: 3px solid red;
+  display: inline-block;
+  padding: 2px 8px;
+  margin-top: 10px;
+  transform: rotate(-5deg);
+}
+
+.claim-task-btn {
+  margin-top: 15px;
+}
+
+/* Admin UI */
+.admin-btn {
+  position: fixed; /* Fixed position for visibility */
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+}
+
+.admin-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
 .admin-login {
-  padding: 20px;
-  max-width: 300px;
+  padding: 25px;
+  width: 100%;
+  max-width: 350px;
 }

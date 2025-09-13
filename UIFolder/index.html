@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,13 +71,29 @@
       const taskId = doc.id;
       const card = document.createElement('div');
       card.className = 'col-md-4';
+
+      const imageUrl = task.imageUrl || ''; // Use imageUrl from Firebase or an empty string
+
       card.innerHTML = `
-        <div class="card poster-card">
-          <div class="card-body">
+        <div class="card poster-card h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="poster-banner">WANTED</div>
             <h5 class="card-title">${task.title}</h5>
+            
+            <div class="poster-image-box">
+              ${imageUrl ? `<img src="${imageUrl}" alt="${task.title}">` : '<div class="no-image-text">NO IMAGE</div>'}
+            </div>
+            
             <p class="card-text">${task.description}</p>
-            <p class="card-text"><small class="text-muted">Bounty: ${task.bounty}</small></p>
-            <a href="#" class="btn btn-primary claim-task-btn" data-task-id="${taskId}">Claim Task</a>
+            
+            <div class="bounty-section">
+              <div class="bounty-label">Bounty</div>
+              <div class="bounty-amount">🌺 ${task.bounty} Points</div>
+            </div>
+
+            <div class="status-band">${task.status || 'OPEN'}</div>
+            
+            <a href="#" class="btn btn-primary claim-task-btn mt-auto" data-task-id="${taskId}">Claim Task</a>
           </div>
         </div>
       `;
@@ -85,6 +102,7 @@
 
     // Fetch tasks and display them
     db.collection("tasks").get().then((querySnapshot) => {
+      posterGrid.innerHTML = ''; // Clear existing posters
       querySnapshot.forEach((doc) => {
         const taskCard = createTaskCard(doc);
         posterGrid.appendChild(taskCard);
@@ -94,11 +112,9 @@
     // Add event listener for claiming tasks
     posterGrid.addEventListener('click', (e) => {
       if (e.target.classList.contains('claim-task-btn')) {
-        e.preventDefault(); // Prevent the default anchor tag behavior
+        e.preventDefault();
         const taskId = e.target.dataset.taskId;
         alert(`You have claimed task: ${taskId}`);
-        // Here you could add more complex logic,
-        // like updating the task in Firebase to show it's claimed
       }
     });
 
