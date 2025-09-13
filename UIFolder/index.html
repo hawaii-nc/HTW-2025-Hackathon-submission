@@ -12,75 +12,136 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid justify-content-end">
-      <button class="btn btn-outline-warning me-2" id="businessBtn">Business</button>
-      <button class="btn btn-outline-info me-2" id="techBtn">Tech</button>
-      <button class="btn btn-outline-light" id="toggleSlider">▼</button>
-    </div>
-  </nav>
-
   <!-- Background -->
   <div class="background">
     <!-- Board -->
-    <div class="board container text-center">
-      <h1 class="wanted-title">🌊 HTW Wanted Board 🌺</h1>
-      <p class="subtitle">Complete tasks, earn bounties, and help the HTW crew!</p>
-
-      <!-- Posters -->
-      <div class="row g-4 justify-content-center poster-grid" id="posterGrid">
-        <!-- Poster 1 -->
-        <div class="col-12 col-md-6 col-lg-4 poster-card business">
-          <a href="promo.html" class="poster-link">
-            <div class="poster">
-              <div class="poster-header">🎬 Make AI Promo Video</div>
-              <div class="poster-body">
-                <p>Create a 30-second promo video showcasing HTW vibes and innovation.</p>
-                <p class="bounty">🌺 Bounty: 50 Points</p>
-                <p class="status open">OPEN</p>
-              </div>
-              <div class="poster-footer">
-                <div class="poster-image no-image">NO IMAGE</div>
-              </div>
-            </div>
-          </a>
+    <div class="board container">
+      <div class="board-header d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="wanted-title">🌊 HTW Wanted Board 🌺</h1>
+          <p class="subtitle">Complete tasks, earn bounties, and help the HTW crew!</p>
         </div>
+        <div class="filter-buttons">
+          <button class="btn btn-outline-warning me-2" id="businessBtn">Business</button>
+          <button class="btn btn-outline-info me-2" id="techBtn">Tech</button>
+          <button class="btn btn-outline-light" id="showAllBtn">All</button>
+        </div>
+      </div>
 
-        <!-- Poster 2 -->
-        <div class="col-12 col-md-6 col-lg-4 poster-card business">
-          <a href="blog.html" class="poster-link">
-            <div class="poster">
-              <div class="poster-header">📝 Write Event Blog</div>
-              <div class="poster-body">
-                <p>Write a recap blog post about HTW 2025 with photos and highlights.</p>
-                <p class="bounty">🌴 Bounty: 30 Points</p>
-                <p class="status review">IN REVIEW</p>
-              </div>
-              <div class="poster-footer">
-                <div class="poster-image">
-                  <img src="https://via.placeholder.com/150" alt="Blog Image">
+      <!-- Posters with custom scrollbar -->
+      <div class="poster-scroll">
+        <div class="row g-4 justify-content-center poster-grid" id="posterGrid">
+
+          <!-- Poster 1 -->
+          <div class="col-12 col-md-6 col-lg-4 poster-card business">
+            <a href="promo.html" class="poster-link">
+              <div class="poster">
+                <div class="poster-header">🎬 Make AI Promo Video</div>
+                <div class="poster-body">
+                  <p>Create a 30-second promo video showcasing HTW vibes and innovation.</p>
+                  <p class="bounty">🌺 Bounty: 50 Points</p>
+                  <p class="status open">OPEN</p>
+                </div>
+                <div class="poster-footer">
+                  <div class="poster-image">
+                    <img src="https://placekitten.com/200/200" alt="Promo Image">
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
 
-        <!-- Poster 3 -->
-        <div class="col-12 col-md-6 col-lg-4 poster-card tech">
-          <a href="sticker.html" class="poster-link">
-            <div class="poster">
-              <div class="poster-header">🎨 Design HTW Sticker Pack</div>
-              <div class="poster-body">
-                <p>Create a sticker pack mixing Hawaiian culture with tech icons.</p>
-                <p class="bounty">🌋 Bounty: 40 Points</p>
-                <p class="status closed">CLOSED</p>
+          <!-- Poster 2 -->
+          <div class="col-12 col-md-6 col-lg-4 poster-card business">
+            <a href="blog.html" class="poster-link">
+              <div class="poster">
+                <div class="poster-header">📝 Write Event Blog</div>
+                <div class="poster-body">
+                  <p>Write a recap blog post about HTW 2025 with photos and highlights.</p>
+                  <p class="bounty">🌴 Bounty: 30 Points</p>
+                  <p class="status review">IN REVIEW</p>
+                </div>
+                <div class="poster-footer">
+                  <div class="poster-image">
+                    <img src="https://placekitten.com/210/210" alt="Blog Image">
+                  </div>
+                </div>
               </div>
-              <div class="poster-footer">
-                <div class="poster-image no-image">NO IMAGE</div>
+            </a>
+          </div>
+
+          <!-- Poster 3 -->
+          <div class="col-12 col-md-6 col-lg-4 poster-card tech">
+            <a href="sticker.html" class="poster-link">
+              <div class="poster">
+                <div class="poster-header">🎨 Design HTW Sticker Pack</div>
+                <div class="poster-body">
+                  <p>Create a sticker pack mixing Hawaiian culture with tech icons.</p>
+                  <p class="bounty">🌋 Bounty: 40 Points</p>
+                  <p class="status closed">CLOSED</p>
+                </div>
+                <div class="poster-footer">
+                  <div class="poster-image">
+                    <img src="https://placekitten.com/220/220" alt="Sticker Image">
+                  </div>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
+
+          <!-- Poster 4 -->
+          <div class="col-12 col-md-6 col-lg-4 poster-card tech">
+            <a href="website.html" class="poster-link">
+              <div class="poster">
+                <div class="poster-header">💻 Build Hackathon Website</div>
+                <div class="poster-body">
+                  <p>Help code the official HTW hackathon project website.</p>
+                  <p class="bounty">🏝️ Bounty: 60 Points</p>
+                  <p class="status open">OPEN</p>
+                </div>
+                <div class="poster-footer">
+                  <div class="poster-image no-image">NO IMAGE</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Poster 5 -->
+          <div class="col-12 col-md-6 col-lg-4 poster-card business">
+            <a href="outreach.html" class="poster-link">
+              <div class="poster">
+                <div class="poster-header">📢 Sponsor Outreach Deck</div>
+                <div class="poster-body">
+                  <p>Create a pitch deck for future Hawai‘i Tech Week sponsors.</p>
+                  <p class="bounty">🌺 Bounty: 45 Points</p>
+                  <p class="status review">IN REVIEW</p>
+                </div>
+                <div class="poster-footer">
+                  <div class="poster-image">
+                    <img src="https://placekitten.com/230/230" alt="Outreach Image">
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Poster 6 -->
+          <div class="col-12 col-md-6 col-lg-4 poster-card tech">
+            <a href="app.html" class="poster-link">
+              <div class="poster">
+                <div class="poster-header">📱 HTW Mobile App</div>
+                <div class="poster-body">
+                  <p>Develop a simple mobile app with schedule + map of HTW events.</p>
+                  <p class="bounty">🌴 Bounty: 70 Points</p>
+                  <p class="status open">OPEN</p>
+                </div>
+                <div class="poster-footer">
+                  <div class="poster-image no-image">NO IMAGE</div>
+                </div>
+              </div>
+            </a>
+          </div>
+
         </div>
       </div>
     </div>
@@ -93,8 +154,7 @@
   <script>
     const businessBtn = document.getElementById("businessBtn");
     const techBtn = document.getElementById("techBtn");
-    const posterGrid = document.getElementById("posterGrid");
-    const toggleSlider = document.getElementById("toggleSlider");
+    const showAllBtn = document.getElementById("showAllBtn");
 
     businessBtn.addEventListener("click", () => {
       document.querySelectorAll(".poster-card").forEach(p => {
@@ -108,9 +168,10 @@
       });
     });
 
-    toggleSlider.addEventListener("click", () => {
-      posterGrid.classList.toggle("collapsed");
-      toggleSlider.textContent = posterGrid.classList.contains("collapsed") ? "▲" : "▼";
+    showAllBtn.addEventListener("click", () => {
+      document.querySelectorAll(".poster-card").forEach(p => {
+        p.style.display = "block";
+      });
     });
   </script>
 </body>

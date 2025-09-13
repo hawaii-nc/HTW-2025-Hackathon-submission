@@ -12,26 +12,31 @@
 /* Board with wood feel */
 .board {
   background: url("https://www.transparenttextures.com/patterns/wood-pattern.png") repeat;
-  background-color: #4b2e15; /* fallback */
+  background-color: #3b2414; /* fallback */
   padding: 25px;
-  border: 10px solid #2b1a0e;
+  border: 10px solid #1f1209;
   border-radius: 12px;
   box-shadow: 0px 10px 25px rgba(0,0,0,0.7);
   max-width: 1100px;
+  position: relative;
 }
 
-/* Titles */
+/* Top text & filters */
+.board-header {
+  margin-bottom: 20px;
+}
+
 .wanted-title {
-  font-family: 'Georgia', serif;
-  font-size: 2.5rem;
-  letter-spacing: 3px;
-  color: #f4e4c1;
+  font-family: 'Treasure Map Deadhand', 'Georgia', serif;
+  font-size: 2.7rem;
+  letter-spacing: 2px;
+  color: #f9e5c5;
   text-shadow: 2px 2px 5px #000;
 }
 
 .subtitle {
-  color: #f4e4c1;
-  margin-bottom: 20px;
+  color: #f9e5c5;
+  font-size: 1.1rem;
 }
 
 /* Posters */
@@ -39,8 +44,8 @@
   background: #fdf5e6;
   border: 4px solid #000;
   padding: 15px;
-  border-radius: 6px;
-  min-height: 340px;
+  border-radius: 8px;
+  min-height: 370px;
   position: relative;
   box-shadow: 5px 8px 15px rgba(0,0,0,0.5);
   transition: transform 0.2s ease;
@@ -54,7 +59,7 @@
 .poster-header {
   font-weight: bold;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   border-bottom: 2px solid #000;
   margin-bottom: 10px;
 }
@@ -81,15 +86,15 @@
 /* Image area */
 .poster-footer {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   left: 0;
   right: 0;
   text-align: center;
 }
 
 .poster-image {
-  width: 90px;
-  height: 90px;
+  width: 150px;
+  height: 150px;
   border: 2px dashed #000;
   margin: 0 auto;
   display: flex;
@@ -105,20 +110,30 @@
 }
 
 .no-image {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
   color: red;
   transform: rotate(-25deg);
   opacity: 0.75;
 }
 
-/* Slider effect */
-.poster-grid.collapsed {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.6s ease;
+/* Poster Scroll (custom vertical slider) */
+.poster-scroll {
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
-.poster-grid {
-  transition: max-height 0.6s ease;
+.poster-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.poster-scroll::-webkit-scrollbar-track {
+  background: #2b1a0e;
+  border-radius: 10px;
+}
+
+.poster-scroll::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 10px;
 }
