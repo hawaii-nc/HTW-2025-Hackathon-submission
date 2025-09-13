@@ -3,43 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel</title>
+  <title>Admin - Add Task</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
+  <link rel="stylesheet" href="styles.css"> </head>
 <body>
-  <div class="board-container">
-    <h2>Admin Panel</h2>
-    <form id="posterForm">
-      <input class="form-control mb-2" type="text" id="title" placeholder="Task Title" required>
-      <textarea class="form-control mb-2" id="desc" placeholder="Task Description" required></textarea>
-      <input class="form-control mb-2" type="text" id="bounty" placeholder="Bounty Points" required>
-      <select class="form-control mb-2" id="status">
-        <option>OPEN</option>
-        <option>IN REVIEW</option>
-        <option>CLOSED</option>
-      </select>
-      <button type="submit" class="btn btn-dark">Add Poster</button>
-    </form>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Add New Task</h1>
+    <div class="card p-4">
+      <form id="addTaskForm">
+        <div class="mb-3">
+          <label for="taskTitle" class="form-label">Task Title</label>
+          <input type="text" class="form-control" id="taskTitle" required>
+        </div>
+        <div class="mb-3">
+          <label for="taskDescription" class="form-label">Task Description</label>
+          <textarea class="form-control" id="taskDescription" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="taskBounty" class="form-label">Bounty</label>
+          <input type="number" class="form-control" id="taskBounty" required>
+        </div>
+        <div class="mb-3">
+          <label for="taskImageUrl" class="form-label">Image URL (Optional)</label>
+          <input type="url" class="form-control" id="taskImageUrl">
+        </div>
+        <div class="mb-3">
+          <label for="taskCategory" class="form-label">Category</label>
+          <select class="form-select" id="taskCategory" required>
+            <option value="tech">Tech</option>
+            <option value="business">Business</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="taskStatus" class="form-label">Status</label>
+          <select class="form-select" id="taskStatus" required>
+            <option value="OPEN">OPEN</option>
+            <option value="IN REVIEW">IN REVIEW</option>
+            <option value="CLOSED">CLOSED</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+      </form>
+    </div>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
   <script>
-    document.getElementById("posterForm").addEventListener("submit", e => {
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAVEsmPu_-cGxXgF4DSKukAD144P3-gXM",
+      authDomain: "htwearntasklist.firebaseapp.com",
+      projectId: "htwearntasklist",
+      storageBucket: "htwearntasklist.appspot.com",
+      messagingSenderId: "60450712031",
+      appId: "1:60450712031:web:4d1ad94f53639d3275bc6a",
+      measurementId: "G-NBK6ZC4LJY"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Handle form submission
+    const addTaskForm = document.getElementById('addTaskForm');
+    addTaskForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const newPoster = {
-        title: document.getElementById("title").value,
-        desc: document.getElementById("desc").value,
-        bounty: document.getElementById("Reward (USD)").value,
-        status: document.getElementById("status").value
-      };
+      const title = document.getElementById('taskTitle').value;
+      const description = document.getElementById('taskDescription').value;
+      const bounty = parseInt(document.getElementById('taskBounty').value, 10);
+      const imageUrl = document.getElementById('taskImageUrl').value;
+      const category = document.getElementById('taskCategory').value;
+      const status = document.getElementById('taskStatus').value;
 
-      // Save to localStorage for persistence
-      let posters = JSON.parse(localStorage.getItem("posters")) || [];
-      posters.push(newPoster);
-      localStorage.setItem("posters", JSON.stringify(posters));
-
-      alert("Poster added! Go back to board to see it.");
+      db.collection("tasks").add({
+        title: title,
+        description: description,
+        bounty: bounty,
+        imageUrl: imageUrl,
+        category: category,
+        status: status
+      })
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+        alert("Task added successfully!");
+        addTaskForm.reset();
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+        alert("Error adding task. See console for details.");
+      });
     });
   </script>
 </body>
