@@ -1,58 +1,67 @@
 import { getAllTasks } from '../firebase-scripts/main.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const posterGrid = document.getElementById('posterGrid');
+document.addEventListener('DOMContentLoaded', async () => {
+    const taskBoard = document.getElementById('task-board');
+    const taskModal = new bootstrap.Modal(document.getElementById('taskModal'));
+    const modalTitle = document.getElementById('taskModalTitle');
+    const modalDescription = document.getElementById('taskModalDescription');
+    const modalBounty = document.getElementById('taskModalBounty');
+    const filterButtons = document.querySelectorAll('.filter-btn');
 
-    if (!posterGrid) {
-        console.error("The 'posterGrid' element was not found in the DOM.");
-        return;
-    }
+    let allTasks = [];
 
-    const fetchAndDisplayTasks = async () => {
-        // Clear any existing static content (like the example posters)
-        posterGrid.innerHTML = 'Loading tasks...';
-        const tasks = await getAllTasks();
+    const renderTasks = (filter = 'all') => {
+        taskBoard.innerHTML = '';
+        const filteredTasks = allTasks.filter(task => {
+            if (filter === 'all') return true;
+            return task.category === filter;
+        });
 
-        // Clear the loading message
-        posterGrid.innerHTML = '';
-
-        if (tasks.length === 0) {
-            posterGrid.innerHTML = '<p class="subtitle">No tasks available right now. Check back later!</p>';
+        if (filteredTasks.length === 0) {
+            taskBoard.innerHTML = '<p class="text-center">No tasks available for this category.</p>';
             return;
         }
 
-        tasks.forEach(task => {
-            const card = document.createElement('div');
-            // Use the category from Firestore to add the correct class for filtering
-            card.className = `col-12 col-md-6 col-lg-4 poster-card ${task.category || ''}`;
-            
-            // Store the task ID on the element for future use (e.g., clicking to see details)
-            card.dataset.taskId = task.id;
-
-            card.innerHTML = `
-              <div class="poster">
-                <div class="poster-header">${task.title}</div>
-                <div class="poster-body">
-                  <p>${task.description}</p>
-                  <p class="bounty">🌺 Bounty: ${task.bounty} Points</p>
-                  <p class="status ${task.status.toLowerCase()}">${task.status.toUpperCase()}</p>
+        filteredTasks.forEach(task => {
+            const taskCard = document.createElement('div');
+            taskCard.className = 'col-md-4 mb-4';
+            taskCard.innerHTML = `
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${task.title}</h5>
+                        <p class="card-text text-success">$${task.bounty}</p>
+                        <p class="card-text">${task.description.substring(0, 100)}...</p>
+                        <button class="btn btn-primary mt-auto">View Details</button>
+                    </div>
                 </div>
-                <div class="poster-footer">
-                  <div class="poster-image no-image">NO IMAGE</div>
-                </div>
-              </div>
             `;
 
-            // You can add click event listeners here to lead to a task details page
-            card.addEventListener('click', () => {
-                console.log(`Clicked task ID: ${task.id}`);
-                // For example, you could redirect to a new page:
-                // window.location.href = `/task-details.html?id=${task.id}`;
+            taskCard.querySelector('.btn-primary').addEventListener('click', () => {
+                modalTitle.textContent = task.title;
+                modalDescription.textContent = task.description;
+                modalBounty.textContent = `Bounty: $${task.bounty}`;
+                taskModal.show();
             });
 
-            posterGrid.appendChild(card);
+            taskBoard.appendChild(taskCard);
         });
     };
 
-    fetchAndDisplayTasks();
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelector('.filter-btn.active').classList.remove('active');
+            button.classList.add('active');
+            const filter = button.getAttribute('data-filter');
+            renderTasks(filter);
+        });
+    });
+
+    // Initial Load
+    try {
+        allTasks = await getAllTasks();
+        renderTasks(); // Render all tasks initially
+    } catch (error) {
+        console.error("Failed to load tasks:", error);
+        taskBoard.innerHTML = '<p class="text-center text-danger">Could not load tasks. Please try again later.</p>';
+    }
 });
