@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,93 +12,150 @@
       font-family: 'Times New Roman', serif;
     }
 
-    /* Wood board */
+    /* Darker wood board */
     .board {
-      background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-      padding: 40px 20px;
+      background: #3b2617 url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+      padding: 30px 15px;
       margin: 40px auto;
-      border: 8px solid #5a3e2b;
-      border-radius: 15px;
-      width: 95%;
-      max-width: 1300px;
-      min-height: 600px;
-      box-shadow: 0 0 40px rgba(0,0,0,0.7);
+      border: 8px solid #2a1a10;
+      border-radius: 12px;
+      width: 85%;
+      max-width: 1000px;
+      min-height: 500px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.7);
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       align-items: flex-start;
     }
 
-    /* Poster look */
+    /* Poster style (smaller) */
     .poster {
       background: #fdf5e6; /* parchment color */
-      width: 260px;
-      height: 380px;
-      margin: 20px;
-      padding: 15px;
+      width: 160px;
+      height: 260px;
+      margin: 12px;
+      padding: 10px;
       position: relative;
       text-align: center;
       color: #2c1b0f;
       font-family: 'Times New Roman', serif;
-      box-shadow: 4px 6px 12px rgba(0,0,0,0.5);
+      box-shadow: 3px 4px 8px rgba(0,0,0,0.4);
       border: 2px solid #d2b48c;
-      border-radius: 6px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    /* “WANTED” Title */
+    /* “WANTED” title */
     .poster .wanted-title {
-      font-size: 32px;
+      font-size: 20px;
       font-weight: bold;
-      margin-bottom: 10px;
       letter-spacing: 2px;
+      margin-bottom: 8px;
       color: #3b2a18;
       text-shadow: 1px 1px #e0c68c;
     }
 
-    /* Content inside */
+    /* Content above image */
     .poster .task-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin: 20px 0 10px 0;
-    }
-
-    .poster .task-due {
       font-size: 14px;
-      margin: 10px 0;
+      font-weight: bold;
+      margin: 6px 0;
     }
-
+    .poster .task-due {
+      font-size: 12px;
+      margin: 2px 0;
+    }
     .poster .task-reward {
-      font-size: 16px;
-      margin-top: 15px;
+      font-size: 13px;
+      margin: 4px 0;
       color: #8b0000;
       font-weight: bold;
+    }
+
+    /* Image section */
+    .poster .task-image {
+      border: 1px solid #8b7d6b;
+      height: 80px;
+      margin-top: 8px;
+      position: relative;
+      background: #f9f3e7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .poster .task-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* NO IMAGE watermark */
+    .poster .task-image.no-image::before {
+      content: "NO IMAGE";
+      position: absolute;
+      font-size: 16px;
+      font-weight: bold;
+      color: rgba(139,0,0,0.6);
+      transform: rotate(-25deg);
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <div class="board">
-    <h1 class="text-light w-100 text-center mb-4">HTW VIBE Hackathon Task Board</h1>
-    
-    <!-- Example Posters -->
+    <h2 class="text-light w-100 text-center mb-3">HTW VIBE Hackathon Task Board</h2>
+
+    <!-- Poster 1 -->
     <div class="poster">
-      <div class="wanted-title">WANTED</div>
-      <div class="task-title">Generate a Promo Video</div>
-      <div class="task-due">Due: Sept 15, 2025</div>
-      <div class="task-reward">Reward: $50</div>
+      <div>
+        <div class="wanted-title">WANTED</div>
+        <div class="task-title">Generate a Promo Video</div>
+        <div class="task-due">Due: Sept 15, 2025</div>
+        <div class="task-reward">Reward: $50</div>
+      </div>
+      <div class="task-image no-image"></div>
     </div>
 
+    <!-- Poster 2 -->
     <div class="poster">
-      <div class="wanted-title">WANTED</div>
-      <div class="task-title">Design Event Flyer</div>
-      <div class="task-due">Due: Sept 16, 2025</div>
-      <div class="task-reward">Reward: $30</div>
+      <div>
+        <div class="wanted-title">WANTED</div>
+        <div class="task-title">Design Event Flyer</div>
+        <div class="task-due">Due: Sept 16, 2025</div>
+        <div class="task-reward">Reward: $30</div>
+      </div>
+      <div class="task-image">
+        <img src="https://via.placeholder.com/120x80.png?text=Flyer+Mockup" alt="Task Image">
+      </div>
     </div>
 
+    <!-- Poster 3 -->
     <div class="poster">
-      <div class="wanted-title">WANTED</div>
-      <div class="task-title">Social Media Post</div>
-      <div class="task-due">Due: Sept 17, 2025</div>
-      <div class="task-reward">Reward: $20</div>
+      <div>
+        <div class="wanted-title">WANTED</div>
+        <div class="task-title">Social Media Post</div>
+        <div class="task-due">Due: Sept 17, 2025</div>
+        <div class="task-reward">Reward: $20</div>
+      </div>
+      <div class="task-image no-image"></div>
+    </div>
+
+    <!-- Poster 4 -->
+    <div class="poster">
+      <div>
+        <div class="wanted-title">WANTED</div>
+        <div class="task-title">HTW Podcast Logo</div>
+        <div class="task-due">Due: Sept 18, 2025</div>
+        <div class="task-reward">Reward: $40</div>
+      </div>
+      <div class="task-image">
+        <img src="https://via.placeholder.com/120x80.png?text=Logo+Sketch" alt="Task Image">
+      </div>
     </div>
 
   </div>
