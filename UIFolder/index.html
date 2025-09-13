@@ -64,6 +64,7 @@
     const db = firebase.firestore();
 
     const posterGrid = document.getElementById('posterGrid');
+    const filterButtons = document.querySelector('.board-filters');
 
     // Function to create a task card
     function createTaskCard(doc) {
@@ -72,7 +73,7 @@
       const card = document.createElement('div');
       card.className = 'col-md-4';
 
-      const imageUrl = task.imageUrl || ''; // Use imageUrl from Firebase or an empty string
+      const imageUrl = task.imageUrl || '';
 
       card.innerHTML = `
         <div class="card poster-card h-100">
@@ -100,13 +101,32 @@
       return card;
     }
 
-    // Fetch tasks and display them
-    db.collection("tasks").get().then((querySnapshot) => {
-      posterGrid.innerHTML = ''; // Clear existing posters
-      querySnapshot.forEach((doc) => {
-        const taskCard = createTaskCard(doc);
-        posterGrid.appendChild(taskCard);
+    // Function to fetch and display tasks based on a filter
+    function fetchAndDisplayTasks(filter = 'all') {
+      let query = db.collection("tasks");
+
+      if (filter !== 'all') {
+        query = query.where("category", "==", filter);
+      }
+
+      query.get().then((querySnapshot) => {
+        posterGrid.innerHTML = ''; // Clear existing posters
+        querySnapshot.forEach((doc) => {
+          const taskCard = createTaskCard(doc);
+          posterGrid.appendChild(taskCard);
+        });
       });
+    }
+
+    // Initial fetch of all tasks
+    fetchAndDisplayTasks();
+
+    // Event listener for filter buttons
+    filterButtons.addEventListener('click', (e) => {
+      if (e.target.classList.contains('filter-btn')) {
+        const filter = e.target.dataset.filter;
+        fetchAndDisplayTasks(filter);
+      }
     });
 
     // Add event listener for claiming tasks
