@@ -49,12 +49,13 @@
   <script>
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "your-api-key",
-      authDomain: "your-auth-domain",
-      projectId: "your-project-id",
-      storageBucket: "your-storage-bucket",
-      messagingSenderId: "your-messaging-sender-id",
-      appId: "your-app-id"
+      apiKey: "AIzaSyDAVEsmPu_-cGxXgF4DSKukAD144P3-gXM",
+      authDomain: "htwearntasklist.firebaseapp.com",
+      projectId: "htwearntasklist",
+      storageBucket: "htwearntasklist.appspot.com",
+      messagingSenderId: "60450712031",
+      appId: "1:60450712031:web:4d1ad94f53639d3275bc6a",
+      measurementId: "G-NBK6ZC4LJY"
     };
 
     // Initialize Firebase
@@ -64,7 +65,9 @@
     const posterGrid = document.getElementById('posterGrid');
 
     // Function to create a task card
-    function createTaskCard(task) {
+    function createTaskCard(doc) {
+      const task = doc.data();
+      const taskId = doc.id;
       const card = document.createElement('div');
       card.className = 'col-md-4';
       card.innerHTML = `
@@ -73,7 +76,7 @@
             <h5 class="card-title">${task.title}</h5>
             <p class="card-text">${task.description}</p>
             <p class="card-text"><small class="text-muted">Bounty: ${task.bounty}</small></p>
-            <a href="#" class="btn btn-primary">Claim Task</a>
+            <a href="#" class="btn btn-primary claim-task-btn" data-task-id="${taskId}">Claim Task</a>
           </div>
         </div>
       `;
@@ -83,10 +86,20 @@
     // Fetch tasks and display them
     db.collection("tasks").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        const task = doc.data();
-        const taskCard = createTaskCard(task);
+        const taskCard = createTaskCard(doc);
         posterGrid.appendChild(taskCard);
       });
+    });
+
+    // Add event listener for claiming tasks
+    posterGrid.addEventListener('click', (e) => {
+      if (e.target.classList.contains('claim-task-btn')) {
+        e.preventDefault(); // Prevent the default anchor tag behavior
+        const taskId = e.target.dataset.taskId;
+        alert(`You have claimed task: ${taskId}`);
+        // Here you could add more complex logic,
+        // like updating the task in Firebase to show it's claimed
+      }
     });
 
     // Admin login functionality
