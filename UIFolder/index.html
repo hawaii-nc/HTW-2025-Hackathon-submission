@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,10 +12,10 @@
       font-family: 'Times New Roman', serif;
     }
 
-    /* Board is rectangular like a cork board */
+    /* Wood board */
     .board {
       background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-      padding: 50px 20px;
+      padding: 40px 20px;
       margin: 40px auto;
       border: 8px solid #5a3e2b;
       border-radius: 15px;
@@ -29,80 +29,78 @@
       align-items: flex-start;
     }
 
-    /* Poster looks like paper */
+    /* Poster look */
     .poster {
-      background: url('one-piece-wanted-poster-template-thumb.png') no-repeat center top;
-      background-size: contain;
-      width: 280px;
-      height: 420px;
+      background: #fdf5e6; /* parchment color */
+      width: 260px;
+      height: 380px;
       margin: 20px;
+      padding: 15px;
       position: relative;
       text-align: center;
       color: #2c1b0f;
-      font-weight: bold;
       font-family: 'Times New Roman', serif;
       box-shadow: 4px 6px 12px rgba(0,0,0,0.5);
-    }
-
-    /* Fallback parchment look in case image doesn’t load */
-    .poster:empty {
-      background: #fdf5e6;
       border: 2px solid #d2b48c;
       border-radius: 6px;
     }
 
-    .poster-content {
-      position: absolute;
-      top: 120px;
-      left: 0;
-      width: 100%;
-      padding: 10px;
+    /* “WANTED” Title */
+    .poster .wanted-title {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      color: #3b2a18;
+      text-shadow: 1px 1px #e0c68c;
     }
 
+    /* Content inside */
     .poster .task-title {
       font-size: 18px;
-      margin-bottom: 10px;
+      font-weight: bold;
+      margin: 20px 0 10px 0;
     }
 
     .poster .task-due {
       font-size: 14px;
-      margin: 5px 0;
+      margin: 10px 0;
     }
 
     .poster .task-reward {
       font-size: 16px;
-      margin-top: 10px;
+      margin-top: 15px;
       color: #8b0000;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="board">
     <h1 class="text-light w-100 text-center mb-4">HTW VIBE Hackathon Task Board</h1>
-    <!-- Example Task Poster -->
+    
+    <!-- Example Posters -->
     <div class="poster">
-      <div class="poster-content">
-        <div class="task-title">Generate a Promo Video</div>
-        <div class="task-due">Due: Sept 15, 2025</div>
-        <div class="task-reward">Reward: $50</div>
-      </div>
+      <div class="wanted-title">WANTED</div>
+      <div class="task-title">Generate a Promo Video</div>
+      <div class="task-due">Due: Sept 15, 2025</div>
+      <div class="task-reward">Reward: $50</div>
     </div>
 
     <div class="poster">
-      <div class="poster-content">
-        <div class="task-title">Design Event Flyer</div>
-        <div class="task-due">Due: Sept 16, 2025</div>
-        <div class="task-reward">Reward: $30</div>
-      </div>
+      <div class="wanted-title">WANTED</div>
+      <div class="task-title">Design Event Flyer</div>
+      <div class="task-due">Due: Sept 16, 2025</div>
+      <div class="task-reward">Reward: $30</div>
     </div>
 
     <div class="poster">
-      <div class="poster-content">
-        <div class="task-title">Social Media Post</div>
-        <div class="task-due">Due: Sept 17, 2025</div>
-        <div class="task-reward">Reward: $20</div>
-      </div>
+      <div class="wanted-title">WANTED</div>
+      <div class="task-title">Social Media Post</div>
+      <div class="task-due">Due: Sept 17, 2025</div>
+      <div class="task-reward">Reward: $20</div>
     </div>
+
   </div>
 </body>
 </html>
