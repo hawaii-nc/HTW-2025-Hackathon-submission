@@ -134,7 +134,23 @@
       if (e.target.classList.contains('claim-task-btn')) {
         e.preventDefault();
         const taskId = e.target.dataset.taskId;
-        alert(`You have claimed task: ${taskId}`);
+        
+        if (confirm("Are you sure you want to claim this task?")) {
+          db.collection("tasks").doc(taskId).update({
+            status: "IN REVIEW"
+          })
+          .then(() => {
+            console.log("Task status updated to IN REVIEW");
+            // Find the card and update its status
+            const card = e.target.closest('.poster-card');
+            const statusBand = card.querySelector('.status-band');
+            statusBand.textContent = "IN REVIEW";
+            e.target.style.display = 'none'; // Hide the button after claiming
+          })
+          .catch((error) => {
+            console.error("Error updating task status: ", error);
+          });
+        }
       }
     });
 
