@@ -26,14 +26,16 @@ const db = getFirestore(app);
  * @param {string} title - The title of the task.
  * @param {string} description - The description of the task.
  * @param {number} bounty - The bounty amount for completing the task.
+ * @param {string} category - The category of the task (e.g., 'tech', 'business').
  * @returns {Promise<string>} The ID of the newly created task.
  */
-export async function createTask(title, description, bounty) {
+export async function createTask(title, description, bounty, category) {
   try {
     const docRef = await addDoc(collection(db, "tasks"), {
       title: title,
       description: description,
       bounty: bounty,
+      category: category,
       createdAt: new Date(),
       submissions: [],
       status: 'open' // e.g., 'open', 'in_review', 'closed'
@@ -125,9 +127,9 @@ export async function approveSubmission(taskId, submissionLinkToApprove) {
     let submissionUpdated = false;
 
     const updatedSubmissions = submissions.map(sub => {
-        if (sub.submissionLink === submissionLinkToApprove && sub.status === '''pending''') {
+        if (sub.submissionLink === submissionLinkToApprove && sub.status === 'pending') {
             submissionUpdated = true;
-            return { ...sub, status: '''approved''', paid: true }; // Mark as '''approved''' and '''paid'''
+            return { ...sub, status: 'approved', paid: true }; // Mark as 'approved' and 'paid'
         }
         return sub;
     });
@@ -135,7 +137,7 @@ export async function approveSubmission(taskId, submissionLinkToApprove) {
     if (submissionUpdated) {
         await updateDoc(taskRef, {
             submissions: updatedSubmissions,
-            status: '''closed''' // Optionally close the task after an approval
+            status: 'closed' // Optionally close the task after an approval
         });
         console.log(`Submission approved for task ${taskId}`);
     } else {
