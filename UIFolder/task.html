@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTW Task Detail</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Wooden board-style container -->
+  <div class="board-container">
+    <h1 class="board-title text-center">📜 Task Details</h1>
+    <div id="taskDetail" class="poster-card mx-auto" style="max-width: 700px;">
+      <!-- Populated by JS -->
+    </div>
+    <div class="text-center mt-4">
+      <a href="index.html" class="btn btn-dark">⬅ Back to Wanted Board</a>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAVEsmPu_-cGxXgF4DSKukAD144P3-gXM",
+      authDomain: "htwearntasklist.firebaseapp.com",
+      projectId: "htwearntasklist",
+      storageBucket: "htwearntasklist.appspot.com",
+      messagingSenderId: "60450712031",
+      appId: "1:60450712031:web:4d1ad94f53639d3275bc6a",
+      measurementId: "G-NBK6ZC4LJY"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const taskDetail = document.getElementById("taskDetail");
+
+    // Get taskId from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const taskId = urlParams.get("id");
+
+    if (taskId) {
+      db.collection("tasks").doc(taskId).get().then((doc) => {
+        if (doc.exists) {
+          const task = doc.data();
+          const imageUrl = task.imageUrl || '';
+          taskDetail.innerHTML = `
+            <div class="poster-banner">WANTED</div>
+            <h2 class="card-title">${task.title}</h2>
+
+            <div class="poster-image-box">
+              ${imageUrl ? `<img src="${imageUrl}" alt="${task.title}">` : '<div class="no-image-text">NO IMAGE</div>'}
+            </div>
+
+            <p class="card-text"><strong>Description:</strong><br>${task.description}</p>
+
+            <div class="bounty-section">
+              <div class="bounty-label">Bounty</div>
+              <div class="bounty-amount">🌺 ${task.bounty} Points</div>
+            </div>
+
+            <div class="status-band">${task.status || 'OPEN'}</div>
+
+            <button id="claimTaskBtn" class="btn btn-primary mt-3">Claim This Task</button>
+          `;
+
+          // Add claim button logic
+          document.getElementById("claimTaskBtn").addEventListener("click", () => {
+            if (confirm("Do you want to claim this task?")) {
+              db.collection("tasks").doc(taskId).update({ status: "IN REVIEW" })
+                .then(() => {
+                  alert("Task claimed! Status set to IN REVIEW.");
+                  document.querySelector(".status-band").textContent = "IN REVIEW";
+                  document.getElementById("claimTaskBtn").style.display = "none";
+                })
+                .catch((error) => {
+                  console.error("Error claiming task: ", error);
+                  alert("Error claiming task. See console.");
+                });
+            }
+          });
+        } else {
+          taskDetail.innerHTML = "<p class='text-center text-danger'>❌ Task not found</p>";
+        }
+      }).catch((error) => {
+        console.error("Error fetching task:", error);
+        taskDetail.innerHTML = "<p class='text-center text-danger'>⚠ Error loading task details</p>";
+      });
+    } else {
+      taskDetail.innerHTML = "<p class='text-center text-warning'>⚠ No task selected</p>";
+    }
+  </script>
+</body>
+</html>
