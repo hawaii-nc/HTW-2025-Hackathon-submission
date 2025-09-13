@@ -23,7 +23,7 @@
               <textarea class="form-control" id="taskDescription" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-              <label for="taskBounty" class="form-label">Bounty</label>
+              <label for="taskBounty" class="form-label">Bounty (USD)</label>
               <input type="number" class="form-control" id="taskBounty" required>
             </div>
             <div class="mb-3">
@@ -57,7 +57,7 @@
               <tr>
                 <th>Title</th>
                 <th>Category</th>
-                <th>Bounty</th>
+                <th>Bounty (USD)</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -89,7 +89,7 @@
               <textarea class="form-control" id="editTaskDescription" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-              <label for="editTaskBounty" class="form-label">Bounty</label>
+              <label for="editTaskBounty" class="form-label">Bounty (USD)</label>
               <input type="number" class="form-control" id="editTaskBounty" required>
             </div>
             <div class="mb-3">
@@ -182,7 +182,7 @@
           row.innerHTML = `
             <td>${task.title}</td>
             <td>${task.category}</td>
-            <td>${task.bounty}</td>
+            <td>$${task.bounty}</td>
             <td>${task.status}</td>
             <td>
               <button class="btn btn-sm btn-warning edit-btn">Edit</button>
