@@ -1,0 +1,87 @@
+/* Background (Hawaiian mountains you uploaded) */
+.background {
+  background: url("22c6c673-7f80-401d-833a-47786e269310.png") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Wanted board */
+.board {
+  background-color: #4b2e15; /* darker brown */
+  padding: 20px;
+  border: 8px solid #2b1a0e;
+  border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.7);
+  max-width: 1000px;
+}
+
+.wanted-title {
+  font-family: 'Georgia', serif;
+  font-size: 3rem;
+  letter-spacing: 5px;
+  color: #e8d5b7;
+  text-shadow: 2px 2px 4px #000;
+  margin-bottom: 20px;
+}
+
+/* Posters */
+.poster {
+  background: #fdf5e6;
+  border: 3px solid #000;
+  border-radius: 6px;
+  padding: 10px;
+  min-height: 280px;
+  position: relative;
+  box-shadow: 4px 6px 12px rgba(0,0,0,0.5);
+}
+
+.poster-header {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #000;
+  margin-bottom: 8px;
+}
+
+.poster-body {
+  text-align: center;
+  font-size: 1rem;
+  padding: 10px 5px;
+}
+
+.poster-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+/* Poster image area */
+.poster-image {
+  width: 90%;
+  margin: 0 auto;
+  border: 2px dashed #000;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster-image img {
+  max-height: 70px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* No image overlay */
+.no-image {
+  font-size: 1rem;
+  font-weight: bold;
+  color: red;
+  transform: rotate(-20deg);
+  opacity: 0.7;
+}
