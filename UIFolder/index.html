@@ -30,58 +30,7 @@
 
       <!-- Posters -->
       <div class="row g-4 justify-content-center poster-grid" id="posterGrid">
-        <!-- Poster 1 -->
-        <div class="col-12 col-md-6 col-lg-4 poster-card business">
-          <a href="promo.html" class="poster-link">
-            <div class="poster">
-              <div class="poster-header">🎬 Make AI Promo Video</div>
-              <div class="poster-body">
-                <p>Create a 30-second promo video showcasing HTW vibes and innovation.</p>
-                <p class="bounty">🌺 Bounty: 50 Points</p>
-                <p class="status open">OPEN</p>
-              </div>
-              <div class="poster-footer">
-                <div class="poster-image no-image">NO IMAGE</div>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <!-- Poster 2 -->
-        <div class="col-12 col-md-6 col-lg-4 poster-card business">
-          <a href="blog.html" class="poster-link">
-            <div class="poster">
-              <div class="poster-header">📝 Write Event Blog</div>
-              <div class="poster-body">
-                <p>Write a recap blog post about HTW 2025 with photos and highlights.</p>
-                <p class="bounty">🌴 Bounty: 30 Points</p>
-                <p class="status review">IN REVIEW</p>
-              </div>
-              <div class="poster-footer">
-                <div class="poster-image">
-                  <img src="https://via.placeholder.com/150" alt="Blog Image">
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <!-- Poster 3 -->
-        <div class="col-12 col-md-6 col-lg-4 poster-card tech">
-          <a href="sticker.html" class="poster-link">
-            <div class="poster">
-              <div class="poster-header">🎨 Design HTW Sticker Pack</div>
-              <div class="poster-body">
-                <p>Create a sticker pack mixing Hawaiian culture with tech icons.</p>
-                <p class="bounty">🌋 Bounty: 40 Points</p>
-                <p class="status closed">CLOSED</p>
-              </div>
-              <div class="poster-footer">
-                <div class="poster-image no-image">NO IMAGE</div>
-              </div>
-            </div>
-          </a>
-        </div>
+        <!-- Tasks will be loaded here dynamically by app.js -->
       </div>
     </div>
   </div>
@@ -113,5 +62,8 @@
       toggleSlider.textContent = posterGrid.classList.contains("collapsed") ? "▲" : "▼";
     });
   </script>
+  
+  <!-- Firebase/App Logic -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
