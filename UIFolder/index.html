@@ -1,12 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTW VIBE HACKATHON 2025 - Nat</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTW VIBE HACKATHON 2025 - Wanted Board</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('22c6c673-7f80-401d-833a-47786e269310.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Times New Roman', serif;
+    }
+
+    /* Board is rectangular like a cork board */
+    .board {
+      background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+      padding: 50px 20px;
+      margin: 40px auto;
+      border: 8px solid #5a3e2b;
+      border-radius: 15px;
+      width: 95%;
+      max-width: 1300px;
+      min-height: 600px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.7);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Poster looks like paper */
+    .poster {
+      background: url('one-piece-wanted-poster-template-thumb.png') no-repeat center top;
+      background-size: contain;
+      width: 280px;
+      height: 420px;
+      margin: 20px;
+      position: relative;
+      text-align: center;
+      color: #2c1b0f;
+      font-weight: bold;
+      font-family: 'Times New Roman', serif;
+      box-shadow: 4px 6px 12px rgba(0,0,0,0.5);
+    }
+
+    /* Fallback parchment look in case image doesn’t load */
+    .poster:empty {
+      background: #fdf5e6;
+      border: 2px solid #d2b48c;
+      border-radius: 6px;
+    }
+
+    .poster-content {
+      position: absolute;
+      top: 120px;
+      left: 0;
+      width: 100%;
+      padding: 10px;
+    }
+
+    .poster .task-title {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .poster .task-due {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .poster .task-reward {
+      font-size: 16px;
+      margin-top: 10px;
+      color: #8b0000;
+    }
+  </style>
 </head>
 <body>
-    <h1>Start</h1>
+  <div class="board">
+    <h1 class="text-light w-100 text-center mb-4">HTW VIBE Hackathon Task Board</h1>
+    <!-- Example Task Poster -->
+    <div class="poster">
+      <div class="poster-content">
+        <div class="task-title">Generate a Promo Video</div>
+        <div class="task-due">Due: Sept 15, 2025</div>
+        <div class="task-reward">Reward: $50</div>
+      </div>
+    </div>
+
+    <div class="poster">
+      <div class="poster-content">
+        <div class="task-title">Design Event Flyer</div>
+        <div class="task-due">Due: Sept 16, 2025</div>
+        <div class="task-reward">Reward: $30</div>
+      </div>
+    </div>
+
+    <div class="poster">
+      <div class="poster-content">
+        <div class="task-title">Social Media Post</div>
+        <div class="task-due">Due: Sept 17, 2025</div>
+        <div class="task-reward">Reward: $20</div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
