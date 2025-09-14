@@ -1,4 +1,7 @@
 # HTW-VIBE-HACKATHON-2025---Nat
+
+NOTE: STORAGE (uploading files) is disabled as it requires a payment method in Google Firebase.
+
 🌴 Hawaii Tech Week – Vibe Coding Hackathon 2025
 Team PACH
 
