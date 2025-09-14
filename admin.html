@@ -69,6 +69,26 @@
         </div>
       </div>
     </div>
+
+    <!-- Feedback Section -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <h1 class="text-center mb-4">Feedback & Support</h1>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Problems</div>
+          <ul id="problemsList" class="list-group list-group-flush"></ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Questions</div>
+          <ul id="questionsList" class="list-group list-group-flush"></ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Edit Task Modal -->
@@ -297,8 +317,48 @@
         });
     });
 
+    // Fetch and display feedback
+    const problemsList = document.getElementById('problemsList');
+    const questionsList = document.getElementById('questionsList');
+
+    function fetchFeedback() {
+      db.collection("feedback").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+        problemsList.innerHTML = '';
+        questionsList.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const feedback = doc.data();
+          const item = document.createElement('li');
+          item.className = 'list-group-item d-flex justify-content-between align-items-start';
+          item.innerHTML = `
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">${feedback.text}</div>
+              <small>${feedback.timestamp.toDate().toLocaleString()}</small>
+            </div>
+            <button class="btn btn-sm btn-danger delete-feedback-btn" data-id="${doc.id}">Delete</button>
+          `;
+
+          if (feedback.type === 'problem') {
+            problemsList.appendChild(item);
+          } else {
+            questionsList.appendChild(item);
+          }
+        });
+      });
+    }
+
+    // Handle feedback deletion
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete-feedback-btn')) {
+        const id = e.target.getAttribute('data-id');
+        if (confirm("Are you sure you want to delete this feedback?")) {
+          db.collection("feedback").doc(id).delete();
+        }
+      }
+    });
+
     // Initial fetch
     fetchTasks();
+    fetchFeedback();
   </script>
 </body>
 </html>

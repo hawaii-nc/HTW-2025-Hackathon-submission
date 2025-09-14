@@ -37,6 +37,11 @@ body {
   padding: 10px;
 }
 
+/* Link that wraps the poster */
+.card-link {
+  text-decoration: none;
+}
+
 /* Wanted Poster Style */
 .poster-card {
   background: #fdf5e6; /* Parchment color */
@@ -49,7 +54,21 @@ body {
   box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
-  height: 100%; /* Make cards in a row the same height */
+  height: 100%;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-image: radial-gradient(circle, #fdf5e6, #f7e9d8);
+}
+
+.poster-card:hover {
+  transform: scale(1.05);
+  box-shadow: 10px 10px 25px rgba(0,0,0,0.5);
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: scale(1.05) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(-2deg); }
+  75% { transform: scale(1.05) rotate(2deg); }
 }
 
 .poster-banner {
@@ -57,9 +76,9 @@ body {
   font-size: 2.2rem;
   font-weight: bold;
   text-transform: uppercase;
-  border-bottom: 3px double black;
   margin-bottom: 10px;
   padding-bottom: 5px;
+  border-bottom: none; /* Removed underline */
 }
 
 .poster-card .card-title {
@@ -75,7 +94,7 @@ body {
 
 .poster-image-box {
   width: 90%;
-  height: 200px; /* Fixed height for consistency */
+  height: 200px;
   border: 3px solid black;
   margin: 15px auto;
   position: relative;
@@ -134,9 +153,17 @@ body {
   margin-top: 15px;
 }
 
+/* Feedback button */
+.feedback-btn {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 1000;
+}
+
 /* Admin UI */
 .admin-btn {
-  position: fixed; /* Fixed position for visibility */
+  position: fixed;
   top: 15px;
   right: 15px;
   z-index: 1000;
@@ -156,4 +183,54 @@ body {
   padding: 25px;
   width: 100%;
   max-width: 350px;
+}
+
+/* --- Media Queries for Responsiveness -- */
+
+/* For tablets (e.g., iPad) */
+@media (max-width: 991.98px) {
+  .board-title {
+    font-size: 2.5rem;
+  }
+
+  .poster-banner {
+    font-size: 2rem;
+  }
+
+  .bounty-amount {
+    font-size: 1.6rem;
+  }
+}
+
+/* For mobile phones (e.g., iPhone) */
+@media (max-width: 767.98px) {
+  .board-container {
+    margin: 20px auto;
+    padding: 15px;
+    border-width: 10px;
+  }
+
+  .board-title {
+    font-size: 2rem;
+  }
+  
+  .poster-card {
+    margin-bottom: 20px;
+  }
+
+  .poster-banner {
+    font-size: 1.8rem; /* Smaller to prevent wrapping */
+  }
+
+  .poster-card .card-title {
+    font-size: 1.3rem;
+  }
+
+  .bounty-amount {
+    font-size: 1.5rem;
+  }
+
+  .poster-image-box {
+    height: 150px; /* Reduce image height on mobile */
+  }
 }

@@ -13,6 +13,11 @@
     <button id="adminTrigger" class="btn btn-dark">Admin?</button>
   </div>
 
+  <!-- Feedback button -->
+  <div class="feedback-btn">
+    <button id="feedbackBtn" class="btn btn-warning">Feedback & Support</button>
+  </div>
+
   <!-- Board container -->
   <div class="board-container">
     <h1 class="board-title">🌊 HTW Wanted Board 🌺</h1>
@@ -43,6 +48,20 @@
     </div>
   </div>
 
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="admin-overlay d-none">
+    <div class="card p-4" style="width: 100%; max-width: 500px;">
+      <h3 class="mb-3">Feedback & Support</h3>
+      <select id="feedbackType" class="form-select mb-2">
+        <option value="problem">Problem</option>
+        <option value="question">Question</option>
+      </select>
+      <textarea id="feedbackText" class="form-control mb-3" rows="5" placeholder="Describe the problem or your question..."></textarea>
+      <button id="submitFeedbackBtn" class="btn btn-primary">Submit</button>
+      <button id="closeFeedbackBtn" class="btn btn-secondary mt-2">Close</button>
+    </div>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 
@@ -70,7 +89,7 @@
       const task = doc.data();
       const taskId = doc.id;
       const card = document.createElement('div');
-      card.className = 'col-md-4';
+      card.className = 'col-lg-4 col-md-6 col-sm-12';
 
       const imageUrl = task.imageUrl || '';
 
@@ -149,6 +168,43 @@
         alert('Incorrect username or password');
       }
     });
+
+    // Feedback & Support functionality
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    const feedbackModal = document.getElementById('feedbackModal');
+    const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
+    const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+
+    feedbackBtn.addEventListener('click', () => {
+      feedbackModal.classList.remove('d-none');
+    });
+
+    closeFeedbackBtn.addEventListener('click', () => {
+      feedbackModal.classList.add('d-none');
+    });
+
+    submitFeedbackBtn.addEventListener('click', () => {
+      const type = document.getElementById('feedbackType').value;
+      const text = document.getElementById('feedbackText').value;
+
+      if(text.trim()) {
+        db.collection("feedback").add({
+          type: type,
+          text: text,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+          alert('Feedback submitted! Thank you.');
+          feedbackModal.classList.add('d-none');
+          document.getElementById('feedbackText').value = '';
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+          alert('Error submitting feedback. Please try again.');
+        });
+      }
+    });
+
   </script>
 </body>
 </html>
