@@ -7,7 +7,7 @@ body {
 
 /* Wooden board container */
 .board-container {
-  background: #deb887; /* A wood-like color */
+  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png'), #d2b48c;
   border: 15px solid #6b4f2c; /* Darker wood border */
   border-radius: 10px;
   padding: 25px;
@@ -15,6 +15,33 @@ body {
   width: 90%;
   max-width: 1200px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.pirate-sticker {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  z-index: 10;
+}
+
+#sticker1 {
+  top: -30px;
+  left: -40px;
+  transform: rotate(-15deg);
+}
+
+#sticker2 {
+  bottom: -50px;
+  right: -30px;
+  transform: rotate(10deg);
+}
+
+#sticker3 {
+  top: 50%;
+  left: -60px;
+  transform: translateY(-50%) rotate(5deg);
+  width: 80px;
 }
 
 .board-title {
@@ -59,7 +86,7 @@ body {
   background-image: radial-gradient(circle, #fdf5e6, #f7e9d8);
 }
 
-.poster-card:hover {
+.poster-card:not(.no-animation):hover {
   transform: scale(1.05);
   box-shadow: 10px 10px 25px rgba(0,0,0,0.5);
   animation: shake 0.5s;
@@ -147,6 +174,13 @@ body {
   padding: 2px 8px;
   margin-top: 10px;
   transform: rotate(-5deg);
+}
+
+.status-band.in-review {
+  background-color: #f0f0f0;
+  color: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
 }
 
 .claim-task-btn {

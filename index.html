@@ -20,6 +20,10 @@
 
   <!-- Board container -->
   <div class="board-container">
+    <img src="https://www.pngall.com/wp-content/uploads/2016/06/Pirate-Skull-PNG-Image.png" alt="Pirate Sticker 1" class="pirate-sticker" id="sticker1">
+    <img src="https://i.pinimg.com/originals/a0/a0/0a/a0a00a1e0b9b4ce63b4f6e4a4a580000.png" alt="Pirate Sticker 2" class="pirate-sticker" id="sticker2">
+    <img src="https://www.transparentpng.com/thumb/one-piece/one-piece-luffy-straw-hat-logo-15.png" alt="Pirate Sticker 3" class="pirate-sticker" id="sticker3">
+
     <h1 class="board-title">🌊 HTW Wanted Board 🌺</h1>
     <p class="board-subtitle">Complete tasks, earn bounties, and help the HTW crew!</p>
 
@@ -45,6 +49,7 @@
       <input id="username" class="form-control mb-2" type="text" placeholder="Username">
       <input id="password" class="form-control mb-2" type="password" placeholder="Password">
       <button id="loginBtn" class="btn btn-dark w-100">Login</button>
+      <button id="backBtn" class="btn btn-secondary w-100 mt-2">Back</button>
     </div>
   </div>
 
@@ -92,6 +97,7 @@
       card.className = 'col-lg-4 col-md-6 col-sm-12';
 
       const imageUrl = task.imageUrl || '';
+      const statusClass = task.status === 'IN REVIEW' ? 'in-review' : '';
 
       card.innerHTML = `
         <a href="task.html?id=${taskId}" class="card-link">
@@ -111,7 +117,7 @@
                 <div class="bounty-amount">$${task.bounty}</div>
               </div>
 
-              <div class="status-band">${task.status || 'OPEN'}</div>
+              <div class="status-band ${statusClass}">${task.status || 'OPEN'}</div>
             </div>
           </div>
         </a>
@@ -151,6 +157,7 @@
     const adminTrigger = document.getElementById('adminTrigger');
     const adminOverlay = document.getElementById('adminOverlay');
     const loginBtn = document.getElementById('loginBtn');
+    const backBtn = document.getElementById('backBtn');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
 
@@ -167,6 +174,10 @@
       } else {
         alert('Incorrect username or password');
       }
+    });
+
+    backBtn.addEventListener('click', () => {
+      adminOverlay.classList.add('d-none');
     });
 
     // Feedback & Support functionality
