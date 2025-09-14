@@ -11,7 +11,7 @@ Challenge: Earn / Task List for HTW
 
 🔗 Project Links
 
-Live Demo: hawaii-nc.github.io
+Live Demo: https://hawaii-nc.github.io/HTW-2025-Hackathon-submission/
 
 GitHub Repo: hawaii-nc/hawaii-nc.github.io
 
