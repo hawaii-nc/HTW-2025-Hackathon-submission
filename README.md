@@ -1,6 +1,6 @@
 # HTW-VIBE-HACKATHON-2025---Nat
 
-NOTE: STORAGE (uploading files) is disabled as it requires a payment method in Google Firebase.
+NOTE: STORAGE (uploading files) is disabled as it requires a payment method in Google Firebase. However, it is fully implemented still, as seen from the previous submissions before the cancellation (in the admin page).
 
 🌴 Hawaii Tech Week – Vibe Coding Hackathon 2025
 Team PACH
